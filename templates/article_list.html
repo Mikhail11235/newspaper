@@ -7,10 +7,14 @@
             <span class="font-weight-bold">{{ article.title }}</span> &middot;
             <span class="text-muted">by {{ article.author }} | {{ article.date }}</span>
         </div>
-        <div class="card-body">
+        <div class="card-body" display="flex" flex-direction="row">
             {{ article.body }}
-            <a href="{% url 'article_edit' article.pk %}">Edit</a> |
-            <a href="{% url 'article_delete' article.pk %}">Delete</a>
+            {% if user == article.author %}
+                <div class="article-change-container" align="right">
+                    <a href="{% url 'article_edit' article.pk %}">Edit</a> |
+                    <a href="{% url 'article_delete' article.pk %}">Delete</a>
+                </div>
+            {% endif %}
         </div>
         <div class="card-footer">
             {% for comment in article.comments.all %}
